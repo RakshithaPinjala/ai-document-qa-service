@@ -10,12 +10,13 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "postgresql+psycopg2://postgres:postgres@localhost:5432/rag_db"
 
     # Providers
-    LLM_PROVIDER: str = "openai"
-    EMBEDDING_PROVIDER: str = "openai"
+    LLM_PROVIDER: str = "openai" # 'openai' or 'gemini'
+    EMBEDDING_PROVIDER: str = "openai" # 'openai' or 'gemini'
     VECTOR_DB: str = "chroma"
 
     # API Keys
     OPENAI_API_KEY: Optional[str] = None
+    GEMINI_API_KEY: Optional[str] = None
 
     # RAG Settings
     TOP_K: int = 5

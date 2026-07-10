@@ -28,8 +28,28 @@ class OpenAIEmbeddingProvider(EmbeddingProvider):
             logger.error(f"Failed to generate embeddings via OpenAI: {e}")
             raise
 
+class GeminiEmbeddingProvider(EmbeddingProvider):
+    def __init__(self, model_name: str = "text-embedding-004"):
+        self.model_name = model_name
+        from google import genai
+        self.client = genai.Client(api_key=settings.GEMINI_API_KEY)
+
+    def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
+        try:
+            response = self.client.models.embed_content(
+                model=self.model_name,
+                contents=texts
+            )
+            # The SDK returns EmbedContentResponse which has a list of embeddings
+            return [emb.values for emb in response.embeddings]
+        except Exception as e:
+            logger.error(f"Failed to generate embeddings via Gemini: {e}")
+            raise
+
 def get_embedding_provider() -> EmbeddingProvider:
     if settings.EMBEDDING_PROVIDER == "openai":
         return OpenAIEmbeddingProvider()
+    elif settings.EMBEDDING_PROVIDER == "gemini":
+        return GeminiEmbeddingProvider()
     else:
         raise ValueError(f"Unsupported embedding provider: {settings.EMBEDDING_PROVIDER}")
