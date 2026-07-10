@@ -1,0 +1,22 @@
+databases:
+  - name: rag_db
+    databaseName: rag_db
+    user: postgres
+
+services:
+  - type: web
+    name: ai-document-qa-service
+    env: docker
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: rag_db
+          property: connectionString
+      - key: LLM_PROVIDER
+        value: openai
+      - key: EMBEDDING_PROVIDER
+        value: openai
+      - key: VECTOR_DB
+        value: pgvector
+      - key: OPENAI_API_KEY
+        sync: false
