@@ -1,7 +1,5 @@
 databases:
   - name: rag_db
-    databaseName: rag_db
-    user: postgres
 
 services:
   - type: web
