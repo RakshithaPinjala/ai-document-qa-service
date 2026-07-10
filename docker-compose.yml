@@ -11,10 +11,10 @@ services:
       - .:/app
     environment:
       - DATABASE_URL=postgresql+psycopg2://postgres:postgres@db:5432/rag_db
-      - LLM_PROVIDER=openai
-      - EMBEDDING_PROVIDER=openai
+      - LLM_PROVIDER=gemini
+      - EMBEDDING_PROVIDER=gemini
       - VECTOR_DB=pgvector
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     depends_on:
       db:
         condition: service_healthy
